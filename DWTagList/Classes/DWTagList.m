@@ -335,11 +335,14 @@
     if (isTextAttributedString) {
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:text];
         [attributedString addAttributes:@{NSFontAttributeName: font} range:NSMakeRange(0, ((NSAttributedString *)text).string.length)];
-        
-        textSize = [attributedString boundingRectWithSize:CGSizeMake(maxWidth, 0) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+
+        textSize = [attributedString boundingRectWithSize:CGSizeMake(maxWidth, NSIntegerMax) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
         _label.attributedText = [attributedString copy];
     } else {
-        textSize = [text sizeWithFont:font forWidth:maxWidth lineBreakMode:NSLineBreakByTruncatingTail];
+        textSize = [text boundingRectWithSize:CGSizeMake(maxWidth, NSIntegerMax)
+                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                   attributes:@{NSFontAttributeName: font}
+                                      context:nil].size;
         _label.text = text;
     }
     
