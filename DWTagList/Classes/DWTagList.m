@@ -311,6 +311,7 @@
         [_label setShadowOffset:TEXT_SHADOW_OFFSET];
         [_label setBackgroundColor:[UIColor clearColor]];
         [_label setTextAlignment:NSTextAlignmentCenter];
+        [_label setNumberOfLines:0];
         [self addSubview:_label];
         
         _button = [UIButton buttonWithType:UIButtonTypeCustom];
