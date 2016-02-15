@@ -124,6 +124,7 @@
     }
     
     CGRect previousFrame = CGRectZero;
+    CGFloat maxPreviousLineHeight = 0;
     BOOL gotPreviousFrame = NO;
     
     NSInteger tag = 0;
@@ -148,14 +149,15 @@
         if (gotPreviousFrame) {
             CGRect newRect = CGRectZero;
             if (previousFrame.origin.x + previousFrame.size.width + tagView.frame.size.width + self.labelMargin > self.frame.size.width) {
-                newRect.origin = CGPointMake(0, previousFrame.origin.y + tagView.frame.size.height + self.bottomMargin);
+                newRect.origin = CGPointMake(0, previousFrame.origin.y + maxPreviousLineHeight + self.bottomMargin);
             } else {
                 newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + self.labelMargin, previousFrame.origin.y);
             }
             newRect.size = tagView.frame.size;
             [tagView setFrame:newRect];
         }
-        
+
+        maxPreviousLineHeight = MAX(maxPreviousLineHeight, tagView.frame.size.height);
         previousFrame = tagView.frame;
         gotPreviousFrame = YES;
         
